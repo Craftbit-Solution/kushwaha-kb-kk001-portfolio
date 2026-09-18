@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Meera Kulkarni — HOD, Department of BCA, Ashcombe Institute</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{
+    --ink:#22291F;
+    --ink-soft:#3A4536;
+    --bg:#FFFFFF;
+    --bg-tint:#FAF8F2;
+    --paper:#FFFFFF;
+    --text:#22291F;
+    --text-muted:#6B7268;
+    --brass:#AD832E;
+    --brass-soft:#F3E7C9;
+    --burgundy:#8C3D3D;
+    --line:#E7E2D3;
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme: dark){
+      --bg:#1B1E19;
+      --bg-tint:#20241D;
+      --paper:#242822;
+      --text:#EDEAE0;
+      --text-muted:#A9B3AA;
+      --line:#333A2F;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1B1E19;
+    --bg-tint:#20241D;
+    --paper:#242822;
+    --text:#EDEAE0;
+    --text-muted:#A9B3AA;
+    --line:#333A2F;
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans',sans-serif;
+  }
+  .font-serif{ font-family:'Lora',serif; }
+  .bg-ink{ background:var(--ink); }
+  .bg-ink-soft{ background:var(--ink-soft); }
+  .bg-paper{ background:var(--paper); }
+  .bg-tint{ background:var(--bg-tint); }
+  .bg-bg{ background:var(--bg); }
+  .avatar-portrait{
+    width:100%;height:100%;border-radius:9999px;object-fit:cover;
+  }
+  .text-muted{ color:var(--text-muted); }
+  .text-brass{ color:var(--brass); }
+  .bg-brass{ background:var(--brass); }
+  .bg-burgundy{ background:var(--burgundy); }
+  .border-line{ border-color:var(--line); }
+  .btn-ghost{
+    border:1px solid var(--line);
+    color:var(--text);
+  }
+  .card-shadow{
+    box-shadow: 0 20px 45px -25px rgba(18,32,26,0.35);
+  }
+  .grain{
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+    background-size: 14px 14px;
+  }
+  .avatar{
+    width:36px;height:36px;border-radius:9999px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:600;color:#fff;
+    border:2px solid var(--bg);
+  }
+  html{ scroll-behavior:smooth; }
+  ::selection{ background:var(--brass-soft); color:#12201A; }
+  a, button{ transition: all .2s cubic-bezier(.4,0,.2,1); }
+  :focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+
+  .hover-lift{ transition: transform .28s cubic-bezier(.4,0,.2,1), box-shadow .28s cubic-bezier(.4,0,.2,1); }
+  .hover-lift:hover{ transform: translateY(-4px); box-shadow: 0 24px 50px -22px rgba(18,32,26,0.28); }
+
+  .btn-primary{ background:var(--ink); color:#F3EFDF; }
+  .btn-primary:hover{ background:var(--ink-soft); transform: translateY(-1px); box-shadow: 0 10px 22px -10px rgba(18,32,26,0.4); }
+
+  header.scrolled{ box-shadow: 0 8px 24px -18px rgba(18,32,26,0.35); }
+  header{ transition: box-shadow .25s ease; position: sticky; top:0; z-index:50; }
+
+  .nav-link{ position:relative; }
+  .nav-link::after{
+    content:''; position:absolute; left:0; bottom:-4px; width:0; height:1.5px;
+    background:var(--brass); transition: width .25s ease;
+  }
+  .nav-link:hover::after{ width:100%; }
+
+  .fade-up{ opacity:0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-up.in-view{ opacity:1; transform: translateY(0); }
+
+  .subject-chip{
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  }
+  .subject-chip:hover{
+    transform: translateY(-3px);
+    border-color: var(--brass);
+    box-shadow: 0 16px 30px -20px rgba(18,32,26,0.3);
+  }
+
+  .avatar-ring{
+    background: conic-gradient(from 220deg, var(--brass), var(--burgundy), var(--brass));
+    padding: 4px; border-radius: 9999px;
+  }
+
+  #mobile-menu{
+    max-height: 0; overflow: hidden; transition: max-height .3s ease;
+  }
+  #mobile-menu.open{ max-height: 480px; }
+  .mobile-link{ border-bottom: 1px solid var(--line); }
+  .mobile-link:last-child{ border-bottom: none; }
+
+  /* Floating contact button */
+  .fab-wrap{ position: fixed; right: 20px; bottom: 20px; z-index: 60; display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
+  .fab-option{
+    display:flex; align-items:center; gap:10px;
+    background: var(--paper); border:1px solid var(--line);
+    padding: 10px 16px 10px 12px; border-radius: 9999px;
+    box-shadow: 0 14px 30px -14px rgba(18,32,26,0.35);
+    opacity:0; transform: translateY(10px) scale(.92);
+    pointer-events:none;
+    transition: opacity .22s ease, transform .22s ease;
+    font-size: 13px; font-weight:500; color:var(--text);
+    white-space:nowrap;
+  }
+  .fab-wrap.open .fab-option{ opacity:1; transform: translateY(0) scale(1); pointer-events:auto; }
+  .fab-wrap.open .fab-option:nth-child(1){ transition-delay: .05s; }
+  .fab-wrap.open .fab-option:nth-child(2){ transition-delay: 0s; }
+  .fab-icon-circle{
+    width:34px; height:34px; border-radius:9999px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .fab-main{
+    width:58px; height:58px; border-radius:9999px;
+    background: var(--ink); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 16px 34px -12px rgba(18,32,26,0.55);
+    cursor:pointer; border:none;
+    transition: transform .3s cubic-bezier(.4,0,.2,1), background .2s ease;
+  }
+  .fab-main:hover{ transform: scale(1.06); }
+  .fab-main svg{ transition: transform .3s ease, opacity .2s ease; }
+  .fab-wrap.open .fab-main{ background: var(--burgundy); }
+  .fab-wrap.open .fab-icon-plus{ transform: rotate(135deg); }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ================= NAV ================= -->
+<header id="site-header" class="bg-paper/90 backdrop-blur border-b border-line">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <path d="M14 3L25 8.5V19.5L14 25L3 19.5V8.5L14 3Z" stroke="var(--brass)" stroke-width="1.4"/>
+        <path d="M14 3V25M3 8.5L14 14L25 8.5M3 19.5L14 14L25 19.5" stroke="var(--burgundy)" stroke-width="1.2"/>
+      </svg>
+      <span class="font-serif text-lg tracking-tight text-[var(--text)]">Dept. of BCA</span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-sm">
+      <a href="#top" class="nav-link text-[var(--text)] font-medium">Home</a>
+      <a href="#subjects" class="nav-link text-muted hover:text-[var(--text)]">Subjects</a>
+      <a href="#courses" class="nav-link text-muted hover:text-[var(--text)]">Programme</a>
+      <a href="#research" class="nav-link text-muted hover:text-[var(--text)]">Updates</a>
+      <a href="#about" class="nav-link text-muted hover:text-[var(--text)]">About</a>
+      <a href="#contact" class="nav-link text-muted hover:text-[var(--text)]">Contact</a>
+    </nav>
+
+    <div class="hidden lg:block">
+      <a href="#contact" class="inline-flex items-center gap-1.5 btn-primary text-sm font-medium px-4 py-2 rounded-full">
+        Office Hours
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+
+    <button id="menu-btn" class="lg:hidden text-[var(--text)]" aria-label="Menu" aria-expanded="false">
+      <svg id="icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7H20M4 12H20M4 17H14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <svg id="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" class="hidden"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="lg:hidden border-t border-line bg-paper">
+    <nav class="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex flex-col gap-1 text-sm">
+      <a href="#top" class="mobile-link py-2.5 text-[var(--text)] font-medium">Home</a>
+      <a href="#subjects" class="mobile-link py-2.5 text-muted">Subjects</a>
+      <a href="#courses" class="mobile-link py-2.5 text-muted">Programme</a>
+      <a href="#research" class="mobile-link py-2.5 text-muted">Updates</a>
+      <a href="#about" class="mobile-link py-2.5 text-muted">About</a>
+      <a href="#contact" class="mobile-link py-2.5 text-muted">Contact</a>
+      <a href="#contact" class="mobile-link inline-flex items-center justify-center gap-1.5 btn-primary text-sm font-medium px-4 py-2.5 rounded-full mt-2">
+        Office Hours
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="top" class="bg-paper relative overflow-hidden">
+  <div class="absolute -left-24 top-10 w-72 h-72 rounded-full bg-brass/10 blur-3xl"></div>
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 pt-14 pb-16 lg:pb-24 relative">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+      <div>
+        <h1 class="font-serif text-[2.6rem] leading-[1.08] sm:text-5xl sm:leading-[1.08] lg:text-[3.4rem] lg:leading-[1.06] text-[var(--text)]">
+          Building Industry-Ready<br>Computer Applications<br>Graduates
+        </h1>
+        <p class="mt-6 text-muted max-w-md leading-relaxed">
+          Fifteen years leading the BCA department — from first-year programming basics to final-year capstone projects, built around what employers actually ask for.
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-6">
+          <a href="#courses" class="inline-flex items-center gap-2 btn-primary font-medium px-5 py-3 rounded-full">
+            View Programme
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </a>
+          <div class="flex items-center gap-3">
+            <div class="flex -space-x-2">
+              <div class="avatar bg-burgundy">SP</div>
+              <div class="avatar bg-brass">RN</div>
+              <div class="avatar bg-[#3E5A47]">AK</div>
+            </div>
+            <div class="text-sm leading-tight">
+              <div class="font-medium text-[var(--text)]">180 students / batch</div>
+              <div class="text-muted">Admissions open for 2026–27</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-9 pt-7 border-t border-line grid grid-cols-2 sm:grid-cols-4 gap-6">
+          <div>
+            <div class="font-serif text-2xl text-[var(--text)]">15+ yrs</div>
+            <div class="text-xs text-muted mt-1">Teaching experience</div>
+          </div>
+          <div>
+            <div class="font-serif text-2xl text-[var(--text)]">Ph.D.</div>
+            <div class="text-xs text-muted mt-1">Computer Science</div>
+          </div>
+          <div>
+            <div class="font-serif text-2xl text-[var(--text)]">UGC–NET</div>
+            <div class="text-xs text-muted mt-1">Qualified educator</div>
+          </div>
+          <div>
+            <div class="font-serif text-2xl text-[var(--text)]">12</div>
+            <div class="text-xs text-muted mt-1">Papers published</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+
+        <!-- Portrait card (placeholder) -->
+        <div class="col-span-2 sm:col-span-1 row-span-2 rounded-2xl card-shadow relative overflow-hidden border border-line bg-tint flex flex-col min-h-[280px] sm:min-h-[320px]">
+          <span class="absolute top-4 left-4 z-10 text-[11px] font-medium bg-paper/90 border border-line text-[var(--text)] px-2.5 py-1 rounded-full">Ph.D. · UGC–NET</span>
+          <div class="flex-1 flex items-center justify-center relative">
+            <div class="absolute inset-0" style="background:radial-gradient(circle at 50% 30%, #F3E7C9 0%, #EFE6CC 55%, #E4D9B4 100%);"></div>
+            <div class="avatar-ring w-28 h-28 sm:w-32 sm:h-32 relative">
+              <div class="w-full h-full rounded-full bg-paper flex items-center justify-center overflow-hidden">
+                <svg viewBox="0 0 100 100" width="72%" height="72%">
+                  <circle cx="50" cy="38" r="20" fill="#8C3D3D" opacity="0.9"/>
+                  <path d="M14 96 C14 66 30 54 50 54 C70 54 86 66 86 96 Z" fill="#22291F" opacity="0.9"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="relative p-4 w-full bg-paper border-t border-line text-center">
+            <span class="text-[var(--text)] text-sm font-serif">Dr. Meera Kulkarni</span><br>
+            <span class="text-muted text-xs">HOD, Department of BCA</span>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-5 card-shadow border border-line bg-paper">
+          <div class="text-xs text-muted">Latest batch placement</div>
+          <div class="font-serif text-3xl mt-1 text-[var(--text)]">96% placed</div>
+          <div class="mt-3 inline-flex items-center gap-1 bg-tint border border-line text-[var(--text)] text-xs px-2.5 py-1 rounded-full">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M4 17L10 11L14 15L20 7" stroke="var(--brass)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            4.6 avg LPA package
+          </div>
+        </div>
+
+        <div class="rounded-2xl card-shadow relative overflow-hidden border border-line">
+          <div class="p-4 flex items-center justify-between bg-tint">
+            <span class="text-xs font-medium text-[var(--text)]">How the BCA programme works</span>
+            <button aria-label="Play video" class="w-8 h-8 rounded-full bg-[var(--ink)] text-white flex items-center justify-center shrink-0">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5V19L19 12L8 5Z"/></svg>
+            </button>
+          </div>
+          <div class="h-16 relative bg-tint">
+            <svg viewBox="0 0 400 90" class="w-full h-full" preserveAspectRatio="none">
+              <path d="M0 60 C 60 30, 100 70, 160 45 S 260 20, 320 50 S 380 30, 400 45 V90 H0 Z" fill="#EFE6CC"/>
+            </svg>
+          </div>
+          <div class="p-3 flex items-center gap-2 bg-paper">
+            <div class="w-6 h-6 rounded-full bg-brass-soft flex items-center justify-center shrink-0">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 13L9 17L19 7" stroke="var(--brass)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="text-[11px] text-[var(--text)] leading-tight">Appointment confirmed<br><span class="text-muted">Thu, 11:00 AM — HOD Cabin, Block A</span></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT / TRUST ================= -->
+<section id="about" class="bg-bg py-20 lg:py-28">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+
+      <div>
+        <span class="inline-block text-xs font-medium px-3 py-1 rounded-full border border-line text-muted">Department profile</span>
+        <h2 class="font-serif text-3xl sm:text-4xl mt-5 leading-tight fade-up">
+          Fifteen years building the department's placement record, one batch at a time
+        </h2>
+        <p class="mt-5 text-muted leading-relaxed max-w-lg">
+          Dr. Kulkarni joined the Department of BCA in 2011 and has served as Head of Department since 2019. Under her leadership the curriculum was rebuilt around three pillars: strong programming fundamentals, hands-on lab work, and a mandatory industry internship before final year.
+        </p>
+        <p class="mt-4 text-muted leading-relaxed max-w-lg">
+          She has guided 60+ final-year capstone projects, led two full syllabus revisions in line with university guidelines, and holds student consultation hours every week of the semester — no exceptions.
+        </p>
+        <p class="mt-4 text-muted leading-relaxed max-w-lg">
+          She received the Best HOD Award (2023, College Level), has published 12 papers in national and international journals, and has served as a resource person for 20+ faculty development programmes.
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-6">
+          <a href="#about" class="inline-flex items-center gap-2 btn-primary font-medium px-5 py-3 rounded-full">
+            Read full profile
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </a>
+          <a href="#research" class="inline-flex items-center gap-1.5 text-sm font-medium">
+            View department updates
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="rounded-3xl overflow-hidden card-shadow border border-line bg-tint">
+        <div class="p-6 sm:p-7">
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="font-serif text-2xl text-[var(--text)]">142 students placed</div>
+              <div class="text-muted text-sm mt-1">Batch of 2026</div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="text-muted"><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></svg>
+          </div>
+          <div class="mt-4 flex gap-5 text-xs text-muted">
+            <span>96% placement rate</span>
+            <span>4.6 LPA average</span>
+            <span>32 recruiters visited</span>
+          </div>
+
+          <div class="mt-6 h-40 sm:h-48">
+            <svg viewBox="0 0 400 180" class="w-full h-full" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#AD832E" stop-opacity="0.45"/>
+                  <stop offset="100%" stop-color="#AD832E" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0 130 L40 110 L80 140 L120 90 L160 120 L200 60 L240 95 L280 50 L320 80 L360 40 L400 65 V180 H0 Z" fill="url(#chartFill)"/>
+              <path d="M0 130 L40 110 L80 140 L120 90 L160 120 L200 60 L240 95 L280 50 L320 80 L360 40 L400 65" fill="none" stroke="var(--brass)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <div class="mt-2 flex items-center gap-2 text-xs">
+            <span class="px-3 py-1.5 rounded-full text-muted">2023</span>
+            <span class="px-3 py-1.5 rounded-full text-muted">2024</span>
+            <span class="px-3 py-1.5 rounded-full text-muted">2025</span>
+            <span class="px-3 py-1.5 rounded-full bg-[var(--ink)] text-white font-medium">2026</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-20 pt-10 border-t border-line">
+      <p class="text-xs text-muted mb-6">Our students are recruited by</p>
+      <div class="flex flex-wrap items-center gap-x-12 gap-y-5">
+        <span class="font-serif text-lg opacity-70">TechNova Systems</span>
+        <span class="font-serif text-lg opacity-70">Cognarc Solutions</span>
+        <span class="font-serif text-lg opacity-70">Bytewave IT</span>
+        <span class="font-serif text-lg opacity-70">Meridian Software</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SUBJECTS ================= -->
+<section id="subjects" class="bg-paper py-20 lg:py-28 border-b border-line">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <span class="inline-block text-xs font-medium px-3 py-1 rounded-full border border-line text-muted">Core teaching areas</span>
+        <h2 class="font-serif text-3xl sm:text-4xl mt-5 leading-tight max-w-lg">
+          Subjects Dr. Kulkarni teaches and leads
+        </h2>
+      </div>
+      <p class="text-muted max-w-sm text-sm leading-relaxed">
+        Alongside departmental administration, she personally teaches core and advanced papers across all three years of the BCA programme.
+      </p>
+    </div>
+
+    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <div class="subject-chip bg-tint border border-line rounded-2xl p-5">
+        <div class="w-9 h-9 rounded-full bg-paper border border-line flex items-center justify-center mb-4">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h10M4 18h7" stroke="var(--brass)" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="font-medium text-[var(--text)]">Data Structures & Algorithms</h3>
+        <p class="text-xs text-muted mt-2">Second year · Core paper</p>
+      </div>
+
+      <div class="subject-chip bg-tint border border-line rounded-2xl p-5">
+        <div class="w-9 h-9 rounded-full bg-paper border border-line flex items-center justify-center mb-4">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="var(--brass)" stroke-width="2"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" stroke="var(--brass)" stroke-width="2"/></svg>
+        </div>
+        <h3 class="font-medium text-[var(--text)]">Database Management Systems</h3>
+        <p class="text-xs text-muted mt-2">Second year · Core paper</p>
+      </div>
+
+      <div class="subject-chip bg-tint border border-line rounded-2xl p-5">
+        <div class="w-9 h-9 rounded-full bg-paper border border-line flex items-center justify-center mb-4">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="var(--brass)" stroke-width="2"/><path d="M9 9h.01M9 15h6M9 12h6" stroke="var(--brass)" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="font-medium text-[var(--text)]">Object-Oriented Programming (Java)</h3>
+        <p class="text-xs text-muted mt-2">First year · Core paper</p>
+      </div>
+
+      <div class="subject-chip bg-tint border border-line rounded-2xl p-5">
+        <div class="w-9 h-9 rounded-full bg-paper border border-line flex items-center justify-center mb-4">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="var(--brass)" stroke-width="2"/><path d="M12 8v4l3 2" stroke="var(--brass)" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="font-medium text-[var(--text)]">Operating Systems</h3>
+        <p class="text-xs text-muted mt-2">Second year · Core paper</p>
+      </div>
+
+      <div class="subject-chip bg-tint border border-line rounded-2xl p-5">
+        <div class="w-9 h-9 rounded-full bg-paper border border-line flex items-center justify-center mb-4">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M3 6h18M3 18h18" stroke="var(--brass)" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="font-medium text-[var(--text)]">Software Engineering</h3>
+        <p class="text-xs text-muted mt-2">Third year · Core paper</p>
+      </div>
+
+      <div class="subject-chip bg-tint border border-line rounded-2xl p-5">
+        <div class="w-9 h-9 rounded-full bg-paper border border-line flex items-center justify-center mb-4">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M8 4l-6 8 6 8M16 4l6 8-6 8" stroke="var(--brass)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="font-medium text-[var(--text)]">Web Technologies</h3>
+        <p class="text-xs text-muted mt-2">Second year · Core paper</p>
+      </div>
+
+      <div class="subject-chip bg-tint border border-line rounded-2xl p-5">
+        <div class="w-9 h-9 rounded-full bg-paper border border-line flex items-center justify-center mb-4">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2.4" stroke="var(--brass)" stroke-width="2"/><circle cx="18" cy="6" r="2.4" stroke="var(--brass)" stroke-width="2"/><circle cx="12" cy="18" r="2.4" stroke="var(--brass)" stroke-width="2"/><path d="M8.1 7.3L11 16M15.9 7.3L13 16M8.4 6h7.2" stroke="var(--brass)" stroke-width="1.6"/></svg>
+        </div>
+        <h3 class="font-medium text-[var(--text)]">Computer Networks</h3>
+        <p class="text-xs text-muted mt-2">Third year · Elective</p>
+      </div>
+
+      <div class="subject-chip bg-tint border border-line rounded-2xl p-5">
+        <div class="w-9 h-9 rounded-full bg-paper border border-line flex items-center justify-center mb-4">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="var(--brass)" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="3.2" stroke="var(--brass)" stroke-width="2"/></svg>
+        </div>
+        <h3 class="font-medium text-[var(--text)]">AI & Data Science (Elective)</h3>
+        <p class="text-xs text-muted mt-2">Final year · New elective</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= COURSE TRACKS ================= -->
+<section id="courses" class="bg-tint py-20 lg:py-28 border-y border-line">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <h2 class="font-serif text-3xl sm:text-4xl text-center leading-tight max-w-2xl mx-auto text-[var(--text)] fade-up">
+      A three-year programme built one skill at a time
+    </h2>
+
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <div class="bg-paper border border-line rounded-2xl p-6 flex flex-col hover-lift">
+        <span class="text-xs text-muted">First year</span>
+        <h3 class="font-serif text-xl mt-3 text-[var(--text)]">Programming Foundations</h3>
+        <p class="text-sm text-muted mt-3 leading-relaxed flex-1">
+          C, Python and problem-solving fundamentals, taught through weekly lab assignments rather than theory alone.
+        </p>
+        <a href="#contact" class="mt-6 inline-flex items-center justify-center gap-1.5 btn-primary text-sm font-medium px-4 py-2.5 rounded-full">
+          Learn more
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+
+      <div class="bg-paper border border-line rounded-2xl p-6 flex flex-col hover-lift">
+        <span class="text-xs text-muted">Second year</span>
+        <h3 class="font-serif text-xl mt-3 text-[var(--text)]">Web & Database Systems</h3>
+        <p class="text-sm text-muted mt-3 leading-relaxed flex-1">
+          Students build and deploy a full working web application backed by a relational database.
+        </p>
+        <a href="#contact" class="mt-6 inline-flex items-center justify-center gap-1.5 btn-primary text-sm font-medium px-4 py-2.5 rounded-full">
+          Learn more
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+
+      <div class="bg-paper border border-line rounded-2xl p-6 flex flex-col hover-lift">
+        <span class="text-xs text-muted">Third year</span>
+        <h3 class="font-serif text-xl mt-3 text-[var(--text)]">Software Engineering Practicum</h3>
+        <p class="text-sm text-muted mt-3 leading-relaxed flex-1">
+          Team-based projects run to real sprint cycles, with code review and testing built into every milestone.
+        </p>
+        <a href="#contact" class="mt-6 inline-flex items-center justify-center gap-1.5 btn-primary text-sm font-medium px-4 py-2.5 rounded-full">
+          Learn more
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+
+      <div class="rounded-2xl p-6 flex flex-col border-2 border-[var(--brass)] bg-brass-soft hover-lift">
+        <span class="text-xs text-[#5B4A22]">Final year</span>
+        <h3 class="font-serif text-xl mt-3 text-[var(--text)]">Capstone & Industry Internship</h3>
+        <p class="text-sm text-[#5B4A22] mt-3 leading-relaxed flex-1">
+          A mandatory internship paired with a capstone project presented to a panel of recruiting partners.
+        </p>
+        <a href="#contact" class="mt-6 inline-flex items-center justify-center gap-1.5 btn-primary text-sm font-medium px-4 py-2.5 rounded-full">
+          Learn more
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESEARCH / UPDATES ================= -->
+<section id="research" class="bg-bg py-20 lg:py-28">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <h2 class="font-serif text-3xl sm:text-4xl leading-tight max-w-lg fade-up">
+        Recent department<br>updates
+      </h2>
+      <a href="#" class="inline-flex items-center gap-1.5 btn-primary text-sm font-medium px-4 py-2.5 rounded-full">
+        View all
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+
+    <div id="updates" class="mt-12 divide-y divide-[var(--line)] border-t border-b border-line">
+
+      <div class="py-7 grid sm:grid-cols-[3rem_1fr_auto] gap-4 sm:gap-8 items-start">
+        <span class="font-serif text-2xl text-muted">01</span>
+        <div>
+          <h3 class="font-medium">New AI & Data Science elective introduced</h3>
+          <p class="text-sm text-muted mt-2 leading-relaxed max-w-2xl">
+            Starting this semester, final-year students can opt into a dedicated AI & Data Science track alongside the core BCA curriculum.
+          </p>
+          <a href="#" class="text-sm font-medium mt-3 inline-flex items-center gap-1">Learn more
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="text-sm text-muted sm:text-right">Oct 7, 2026</span>
+      </div>
+
+      <div class="py-7 grid sm:grid-cols-[3rem_1fr_auto] gap-4 sm:gap-8 items-start">
+        <span class="font-serif text-2xl text-muted">02</span>
+        <div>
+          <h3 class="font-medium">Industry partnership with TechNova Systems launched</h3>
+          <p class="text-sm text-muted mt-2 leading-relaxed max-w-2xl">
+            The department has signed a training-and-hiring partnership offering guaranteed internship slots to top-performing students.
+          </p>
+          <a href="#" class="text-sm font-medium mt-3 inline-flex items-center gap-1">Learn more
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="text-sm text-muted sm:text-right">Sep 20, 2026</span>
+      </div>
+
+      <div class="py-7 grid sm:grid-cols-[3rem_1fr_auto] gap-4 sm:gap-8 items-start">
+        <span class="font-serif text-2xl text-muted">03</span>
+        <div>
+          <h3 class="font-medium">BCA batch of 2026 achieves 96% placement</h3>
+          <p class="text-sm text-muted mt-2 leading-relaxed max-w-2xl">
+            32 recruiters visited campus this season, with the highest package touching 9.2 LPA — the department's best result yet.
+          </p>
+          <a href="#" class="text-sm font-medium mt-3 inline-flex items-center gap-1">Learn more
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="text-sm text-muted sm:text-right">Aug 15, 2026</span>
+      </div>
+
+    </div>
+
+    <!-- feature cards + CTA -->
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div class="rounded-2xl overflow-hidden card-shadow border border-line bg-tint relative min-h-[260px] flex flex-col justify-between p-5 hover-lift">
+        <div class="flex justify-between items-start">
+          <span class="text-xs bg-paper border border-line text-[var(--text)] px-3 py-1 rounded-full font-medium">Syllabus</span>
+          <span class="w-8 h-8 rounded-full bg-paper border border-line flex items-center justify-center">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+        <h3 class="font-serif text-xl text-[var(--text)] leading-snug">BCA Curriculum Guide</h3>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden card-shadow border border-line bg-tint relative min-h-[260px] flex flex-col justify-between p-5 hover-lift">
+        <div class="flex justify-between items-start">
+          <span class="text-xs bg-paper border border-line text-[var(--text)] px-3 py-1 rounded-full font-medium">Reading</span>
+          <span class="w-8 h-8 rounded-full bg-paper border border-line flex items-center justify-center">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+        <h3 class="font-serif text-xl text-[var(--text)] leading-snug">Capstone Project Ideas</h3>
+      </div>
+
+      <div class="rounded-2xl p-6 flex flex-col justify-between min-h-[260px] sm:col-span-2 lg:col-span-1 border-2 border-[var(--brass)] hover-lift" style="background:var(--brass-soft);">
+        <span class="w-9 h-9 rounded-full bg-[var(--ink)] flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <div>
+          <h3 class="font-serif text-lg text-[var(--text)] leading-snug">
+            New student? Here's how admission to BCA works.
+          </h3>
+          <p class="text-sm text-[#5B4A22] mt-3 leading-relaxed">
+            Apply through the college admission portal, then attend a short counselling session with the department before enrollment.
+          </p>
+          <a href="#contact" id="contact" class="mt-5 inline-flex items-center gap-1.5 btn-primary text-sm font-medium px-4 py-2.5 rounded-full">
+            Enrollment steps
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER VALUES ================= -->
+<section class="bg-bg pb-20">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 pt-10 border-t border-line">
+    <div class="grid sm:grid-cols-3 gap-10">
+      <div>
+        <h4 class="font-serif text-lg">Practical Learning</h4>
+        <p class="text-sm text-muted mt-3 leading-relaxed">
+          Every course pairs theory with a lab component — students write and ship real code from semester one.
+        </p>
+        <a href="#" class="text-sm font-medium mt-4 inline-flex items-center gap-1">Learn more
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      <div>
+        <h4 class="font-serif text-lg">Industry Mentorship</h4>
+        <p class="text-sm text-muted mt-3 leading-relaxed">
+          Visiting faculty from partner companies review student projects and mentor final-year capstones.
+        </p>
+        <a href="#" class="text-sm font-medium mt-4 inline-flex items-center gap-1">Learn more
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      <div>
+        <h4 class="font-serif text-lg">Placement Support</h4>
+        <p class="text-sm text-muted mt-3 leading-relaxed">
+          Dedicated resume, aptitude and interview prep sessions run through the final two semesters.
+        </p>
+        <a href="#" class="text-sm font-medium mt-4 inline-flex items-center gap-1">Learn more
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-paper border-t border-line text-muted text-sm">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 py-6 flex flex-wrap items-center justify-between gap-3">
+    <span>© 2026 Dr. Meera Kulkarni, HOD — Department of BCA, Ashcombe Institute</span>
+    <span>HOD Cabin, Block A · Mon–Fri 11am–1pm</span>
+  </div>
+</footer>
+
+<!-- ================= FLOATING CONTACT BUTTON ================= -->
+<div id="fab-wrap" class="fab-wrap">
+  <a id="fab-whatsapp" href="https://wa.me/919876543210?text=Hii%20sir" target="_blank" rel="noopener" class="fab-option">
+    <span class="fab-icon-circle" style="background:#E7F5EC;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M17.5 14.4c-.3-.15-1.75-.86-2-.96-.27-.1-.47-.15-.66.15-.2.3-.76.96-.93 1.16-.17.2-.34.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.48-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.5.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.6-.9-2.19-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.06 2.87 1.21 3.07.15.2 2.09 3.19 5.07 4.47.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.24-.7.24-1.29.17-1.41-.07-.13-.27-.2-.57-.35z" fill="#25D366"/><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18.13c-1.66 0-3.2-.47-4.5-1.29l-.32-.2-3.02.79.8-2.93-.21-.3A8.12 8.12 0 013.87 12C3.87 7.53 7.53 3.87 12 3.87S20.13 7.53 20.13 12 16.47 20.13 12 20.13z" fill="#25D366"/></svg>
+    </span>
+    WhatsApp
+  </a>
+  <a id="fab-call" href="tel:+919876543210" class="fab-option">
+    <span class="fab-icon-circle" style="background:var(--brass-soft);">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3.6c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.3 1.1l-2.1 2.2z" fill="var(--brass)"/></svg>
+    </span>
+    Call now
+  </a>
+  <button id="fab-toggle" class="fab-main" aria-label="Contact options" aria-expanded="false">
+    <svg class="fab-icon-plus" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<script>
+  // Header shadow on scroll
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 8) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  }, { passive: true });
+
+  // Mobile hamburger menu
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconMenu = document.getElementById('icon-menu');
+  const iconClose = document.getElementById('icon-close');
+
+  function closeMenu(){
+    mobileMenu.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    iconMenu.classList.remove('hidden');
+    iconClose.classList.add('hidden');
+  }
+  function openMenu(){
+    mobileMenu.classList.add('open');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    iconMenu.classList.add('hidden');
+    iconClose.classList.remove('hidden');
+  }
+  menuBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.contains('open');
+    isOpen ? closeMenu() : openMenu();
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024) closeMenu();
+  });
+
+  // Floating contact button
+  const fabWrap = document.getElementById('fab-wrap');
+  const fabToggle = document.getElementById('fab-toggle');
+  fabToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = fabWrap.classList.toggle('open');
+    fabToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  document.addEventListener('click', (e) => {
+    if (!fabWrap.contains(e.target)) {
+      fabWrap.classList.remove('open');
+      fabToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Smooth fade-up reveal on scroll
+  const revealEls = document.querySelectorAll('.fade-up');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
